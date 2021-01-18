@@ -126,6 +126,12 @@ void fingerprint_for_public_key(extended_public_key_t *pub, uchar *fingerprint) 
   fingerprint[3] = identifier[3];
 }
 
+void hash160_for_public_key(extended_public_key_t *pub, uchar *address_bytes) {
+  uchar serialized_pub_key[33] = {0};
+  serialized_public_key(pub, &serialized_pub_key);
+  hash160(&serialized_pub_key, 33, address_bytes);
+}
+
 void p2shwpkh_address_for_public_key(extended_public_key_t *pub, uchar *address_bytes) {
   uchar pubkey_hash[20] = { 0 };
   identifier_for_public_key(pub, &pubkey_hash);

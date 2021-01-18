@@ -107,21 +107,21 @@ __kernel void int_to_address(ulong mnemonic_start_hi,ulong mnemonic_start_lo, __
   serialized_public_key(&master_public, &serialized_master_public);
   extended_private_key_t target_key;
   extended_public_key_t target_public_key;
-  hardened_private_child_from_private(&master_private, &target_key, 49);
+  hardened_private_child_from_private(&master_private, &target_key, 44);
   hardened_private_child_from_private(&target_key, &target_key, 0);
   hardened_private_child_from_private(&target_key, &target_key, 0);
   normal_private_child_from_private(&target_key, &target_key, 0);
   normal_private_child_from_private(&target_key, &target_key, 0);
   public_from_private(&target_key, &target_public_key);
 
-  uchar raw_address[25] = {0};
-  p2shwpkh_address_for_public_key(&target_public_key, &raw_address);
+  uchar hash160_address[20] = {0};
+  hash160_for_public_key(&target_public_key, &hash160_address);
 
-  uchar target_address[25] = {0x05, 0xAD, 0xA1, 0x2B, 0x11, 0x3D, 0x9B, 0x19, 0x61, 0x47, 0x57, 0xD1, 0x9F, 0xC0, 0x8D, 0xDD, 0x53, 0x4B, 0xF0, 0x22, 0x76, 0xBD, 0x3A, 0x31, 0x46};
- 
+  uchar target_address[20] = {0xC7,0x9B,0xD6,0x99,0xEC,0xE8,0xA4,0x23,0xE5,0xB9,0x9C,0x35,0x98,0x6E,0x5D,0x75,0x59,0xA7,0xF3,0x4B};
+  
   bool found_target = 1;
-  for(int i=0;i<25;i++) {
-    if(raw_address[i] != target_address[i]){
+  for(int i=0;i<20;i++) {
+    if(hash160_address[i] != target_address[i]){
       found_target = 0;
     }
   }
